@@ -66,7 +66,7 @@ export default {
   methods: {
     async getLikers () {
       try {
-        const response = await fetch('//localhost:3030/likers', {
+        const response = await fetch('https://instagram-follower-backend.vercel.app/likers', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
