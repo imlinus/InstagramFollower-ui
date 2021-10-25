@@ -32,7 +32,9 @@
         </div>
 
         <div class="field">
-          <button class="button is-primary" @click="getLikers">Go</button>
+          <button class="button is-primary" @click="getUsersWhoLikedPost">
+            Go
+          </button>
         </div>
       </div>
 
@@ -64,30 +66,57 @@ export default {
   },
 
   methods: {
-    async getLikers () {
+    async getUsersWhoLikedPost () {
       try {
-        const response = await fetch('https://localhost:2030/likers', {
+        const response = await fetch('https://instagram-follower-backend.vercel.app/likes', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            username: this.username,
-            password: this.password,
+            usr: this.username,
+            pwd: this.password,
             postId: this.postId
+          })
+        })
+
+        const users = await response.json()
+
+        console.log(users)
+        
+        users.forEach(user => (
+          setTimeout(() => (
+            this.followUser(user.ID)
+           }, 5000) // ändra denna
+        ))
+      } catch (error) {
+        this.hasError = true
+      }
+    },
+    
+    followUser (userId) (
+      try {
+        const response = await fetch('https://instagram-follower-backend.vercel.app/follow', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            usr: this.username,
+            pwd: this.password,
+            usrId: id
           })
         })
 
         const data = await response.json()
 
-        console.log(data)
-
-        this.response = data
+        console.log('Response', data)
       } catch (error) {
-        this.hasError = true
+        console.error(error)
       }
-    }
+    }  
   }
 }
 </script>
