@@ -85,17 +85,17 @@ export default {
 
         console.log(users)
         
-        users.forEach(user => (
-          setTimeout(() => (
+        users.forEach(user => {
+          setTimeout(() => {
             this.followUser(user.ID)
-           }, 5000) // ändra denna
+           }, 5000)
         ))
       } catch (error) {
         this.hasError = true
       }
     },
     
-    followUser (userId) (
+    followUser (userId) {
       try {
         const response = await fetch('https://instagram-follower-backend.vercel.app/follow', {
           method: 'POST',
